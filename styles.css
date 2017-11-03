@@ -1,0 +1,16 @@
+#leftPic {
+  width: 25%;
+  height: 125;
+  display: inline;
+}
+
+#rightPic {
+  width: 25%;
+  height: 25%;
+  display: inline;
+}
+#centerPic {
+  width: 25%;
+  height: 25%;
+  display: inline;
+}
