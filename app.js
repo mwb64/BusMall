@@ -1,21 +1,20 @@
 'use strict'
 //Create an array to house pictures:
-var marketProjectPics = ['img/bag.jpg','img/banana.jpg','img/bathroom.jpg','img/boots.jpg','img/breakfast.jpg','img/bubblegum.jpg','img/chair.jpg','img/cthulhu.jpg','img/dog-duck.jpg','img/dragon.jpg','img/pen.jpg','img/pet-sweep.jpg','img/scissors.jpg','img/shark.jpg','img/sweep.png','img/tauntaun.jpg','img/unicorn.jpg','img/usb.gif','img/water-can.jpg','img/wine-glass.jpg']
-console.log(marketProjectPics);
-var picObjects = [];
-var randArr = [];
+var marketProjectPics = []
+var clickBait = [];
+var randPicArr = [];
+var totalClicks = 0;
 
 //create pic objects TestMarketPics(name,location)
 function TestMarketPics (name,picLocation){
   this.name = name;
   this.picLocation = picLocation;
-  picObjects.push(this);
   this.totalSelections = 0;
   this.totalViews = 0;
+    marketProjectPics.push(this);
 }
-
 //create each picture objects
-new TestMarketPics ('bag','img/bag.jpg');
+var bag = new TestMarketPics ('bag','img/bag.jpg');
 new TestMarketPics ('banana','img/banana.jpg');
 new TestMarketPics ('bathroom','img/bathroom.jpg');
 new TestMarketPics ('boots','img/boots.jpg');
@@ -36,82 +35,58 @@ new TestMarketPics ('usb','img/usb.gif');
 new TestMarketPics ('water-can','img/water-can.jpg');
 new TestMarketPics ('wine-glass','img/wine-glass.jpg');
 
-var leftPic = document.getElementById('leftPic');
-var centerPic = document.getElementById('centerPic');
-var rightPic = document.getElementById('rightPic');
-
-leftPic.addEventListener('click',picRandom);
-rightPic.addEventListener('click',picRandom2);
-centerPic.addEventListener('click',picRandom3);
-
 function picRandom(){
-  var randomizer = Math.floor(Math.random() * marketProjectPics.length);
-  leftPic.src = picObjects[randomizer].picLocation;
-};
-picRandom();
+  return Math.floor(Math.random() * marketProjectPics.length);
+}
 
-function picRandom2(){
-  var randomizer = Math.floor(Math.random() * marketProjectPics.length);
-  centerPic.src = picObjects[randomizer].picLocation;
-};
-picRandom2();
+var previousPicArray = [];
 
-function picRandom3(){
-  var randomizer = Math.floor(Math.random() * marketProjectPics.length);
-  rightPic.src = picObjects[randomizer].picLocation;
-};
-picRandom3();
+ function picRandomGen(){
+   var currentPicArray = [];
+   while(currentPicArray.length < 3){
+     var randMarketPic = picRandom();
+    console.log(randMarketPic);
+     if(!previousPicArray.includes(randMarketPic) && !currentPicArray.includes(randMarketPic)){
+       currentPicArray.push(randMarketPic);
+     }
+    }
+   var leftPic1 = marketProjectPics[currentPicArray[0]];
+   var centerPic1 = marketProjectPics[currentPicArray[1]];
+   var rightPic1 = marketProjectPics[currentPicArray[2]];
+   var leftPic = document.getElementById('leftPic');
+   var centerPic = document.getElementById('centerPic');
+   var rightPic = document.getElementById('rightPic');
+   leftPic.src = leftPic1.picLocation;
+   centerPic.src = centerPic1.picLocation;
+   rightPic.src = rightPic1.picLocation;
+    leftPic.alt = currentPicArray[0];
+    centerPic.alt = currentPicArray[1];
+    rightPic.alt = currentPicArray[2];
+   previousPicArray = currentPicArray;
+   console.log(previousPicArray);
+   leftPic1.totalViews++;
+   centerPic1.totalViews++;
+   rightPic1.totalViews++;
+  }
+picRandomGen();
+console.log(picRandomGen);
 
-// var leftPic = document.getElementById('leftPic');
-// var centerPic = document.getElementById('centerPic');
-// var rightPic = document.getElementById('rightPic');
-//
-//
-// var leftImg;
-// var centerImg;
-// var rightImg;
-//
-// function render() {
-//   var randomPic = function() {
-//     for(var i = 0; i< picObjects.length;i++){
-//       leftimg = picRandom()[i];
-//       centerImg = picRandom()[i];
-//       rightImg = picRandom()[i];
-//       randArr.push(leftimg,centerImg,rightImg);
-//       leftPic.setAttribute('scr',leftimg.picLocation);
-//       centerPic.setAttribute('src',centerImg.picLocation);
-//       rightPic.setAttribute('src',rightImg.picLocation);
-//     }
-//     randomPic()
-//   }
-// }
-// render()
-// // function renderPic(){
-// //   for(var i = 0; i < TestMarketPics.length;i++){
-// // var randPicSection = document.getElementById('randPicSection');
-// // var leftPic = document.getElementById('leftPic');
-// // leftPic.setAttribute('src',leftPic.picLocation[i]);
-// // var centerPic = document.getElementById('centerPic');
-// // centerPic.setAttribute('src',centerPic.picLocation[i]);
-// // var rightPic = document.getElementById('rightPic');
-// // rightPic.setAttribute('src',rightPic.picLocation[i]);
-// // }
-// // }
-// // renderPic;
-//
-//
-// // Randomizer that cycles throught the pictures
-//
-// //
-// // function locRandom(){
-// //   return Math.floor(Math.random() * TestMarketPics[1]);
-// // }
-//
-//
-//
-// // function renderPics(){
-// //   leftPic = picRandom;
-// //   rightPic = picRandom;
-// //   centerPic = picRandom;
-// // }
-// // renderPics();
+var clickAmounts = 25;
+function clickHandle(event){
+  picRandomGen();
+  totalClicks++;
+  var productArr = this.alt;
+  marketProjectPics[productArr].totalSelections;
+  if(clickAmounts === totalClicks){
+    leftPic.removeEventListener('click',clickHandle);
+    centerPic.removeEventListener('click',clickHandle);
+    rightPic.removeEventListener('click',clickHandle);
+    leftPic.src = " ";
+    centerPic.src = " ";
+    rightPic.src = " ";
+  }
+}
+
+leftPic.addEventListener('click',clickHandle);
+rightPic.addEventListener('click',clickHandle);
+centerPic.addEventListener('click',clickHandle);
