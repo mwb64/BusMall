@@ -90,11 +90,11 @@ function clickHandle(event){
 }
 
 function showData(){
-  var buzMallData = document.getElementById('buzMallData');
+//  var buzMallData = document.getElementById('buzMallData');
   for(var i = 0; i < marketProjectPics.length; i++) {
     var liItem = document.createElement('li');
     liItem.textContent = marketProjectPics[i].name + ' has ' + marketProjectPics[i].totalSelections + ' votes and ' + marketProjectPics[i].totalViews + ' views ';
-    buzMallData.appendChild(liItem);
+    // buzMallData.appendChild(liItem);
     clickBait.push(marketProjectPics[i].totalSelections);
   };
 };
@@ -109,8 +109,7 @@ var labelForChart = [];
 for(var i = 0; i < marketProjectPics.length;i++){
   labelForChart.push(marketProjectPics[i].name)
 }
-var buzMallCanvas = document.getElementById('buzMallCanvas');
-var getctx = buzMallCanvas.getContext('2d');
+var buzMallCanvas = document.getElementById('buzMallCanvas').getContext('2d');
 
 var myChart = new Chart(buzMallCanvas, {
   type: 'bar',
