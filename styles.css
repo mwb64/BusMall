@@ -14,3 +14,7 @@
   height: 270px;
   display: inline;
 }
+#buzMallCanvas {
+  height: 100px;
+  width: 100px;
+}

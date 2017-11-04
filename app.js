@@ -2,7 +2,7 @@
 //Create an array to house pictures:
 var marketProjectPics = []
 var clickBait = [];
-var randPicArr = [];
+var totalSelectionsData = [];
 var totalClicks = 0;
 
 //create pic objects TestMarketPics(name,location)
@@ -59,9 +59,9 @@ var previousPicArray = [];
    leftPic.src = leftPic1.picLocation;
    centerPic.src = centerPic1.picLocation;
    rightPic.src = rightPic1.picLocation;
-    leftPic.alt = currentPicArray[0];
-    centerPic.alt = currentPicArray[1];
-    rightPic.alt = currentPicArray[2];
+   leftPic.alt = currentPicArray[0];
+   centerPic.alt = currentPicArray[1];
+   rightPic.alt = currentPicArray[2];
    previousPicArray = currentPicArray;
    console.log(previousPicArray);
    leftPic1.totalViews++;
@@ -76,7 +76,7 @@ function clickHandle(event){
   picRandomGen();
   totalClicks++;
   var productArr = this.alt;
-  marketProjectPics[productArr].totalSelections;
+  marketProjectPics[productArr].totalSelections++;
   if(clickAmounts === totalClicks){
     leftPic.removeEventListener('click',clickHandle);
     centerPic.removeEventListener('click',clickHandle);
@@ -84,9 +84,52 @@ function clickHandle(event){
     leftPic.src = " ";
     centerPic.src = " ";
     rightPic.src = " ";
+    showData();
+    createChart();
   }
 }
 
-leftPic.addEventListener('click',clickHandle);
-rightPic.addEventListener('click',clickHandle);
-centerPic.addEventListener('click',clickHandle);
+function showData(){
+  var buzMallData = document.getElementById('buzMallData');
+  for(var i = 0; i < marketProjectPics.length; i++) {
+    var liItem = document.createElement('li');
+    liItem.textContent = marketProjectPics[i].name + ' has ' + marketProjectPics[i].totalSelections + ' votes and ' + marketProjectPics[i].totalViews + ' views ';
+    buzMallData.appendChild(liItem);
+    clickBait.push(marketProjectPics[i].totalSelections);
+  };
+};
+
+ leftPic.addEventListener('click',clickHandle);
+ rightPic.addEventListener('click',clickHandle);
+ centerPic.addEventListener('click',clickHandle);
+
+//Chart
+function createChart(){
+var labelForChart = [];
+for(var i = 0; i < marketProjectPics.length;i++){
+  labelForChart.push(marketProjectPics[i].name)
+}
+var buzMallCanvas = document.getElementById('buzMallCanvas');
+var getctx = buzMallCanvas.getContext('2d');
+
+var myChart = new Chart(buzMallCanvas, {
+  type: 'bar',
+  data: {
+    labels: labelForChart ,
+    datasets: [{
+      label: 'number of votes',
+      data: clickBait,
+      backgroundColor: 'red'
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          begineAtZero: true
+        }
+      }]
+    }
+  }
+});
+}
