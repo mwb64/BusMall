@@ -78,6 +78,7 @@ function clickHandle(event){
   var productArr = this.alt;
   marketProjectPics[productArr].totalSelections++;
   if(clickAmounts === totalClicks){
+    localStorage.newClick = JSON.stringify(marketProjectPics);
     leftPic.removeEventListener('click',clickHandle);
     centerPic.removeEventListener('click',clickHandle);
     rightPic.removeEventListener('click',clickHandle);
@@ -89,6 +90,13 @@ function clickHandle(event){
   }
 }
 
+if(localStorage.newClick){
+  var newClicks = JSON.parse(localStorage.newClick);
+  for(var i = 0; i <newClicks.length; i++){
+    marketProjectPics[i].totalSelections = newClicks[i].totalSelections;
+  }
+}
+
 function showData(){
 //  var buzMallData = document.getElementById('buzMallData');
   for(var i = 0; i < marketProjectPics.length; i++) {
@@ -96,6 +104,7 @@ function showData(){
     liItem.textContent = marketProjectPics[i].name + ' has ' + marketProjectPics[i].totalSelections + ' votes and ' + marketProjectPics[i].totalViews + ' views ';
     // buzMallData.appendChild(liItem);
     clickBait.push(marketProjectPics[i].totalSelections);
+    console.log(clickBait);
   };
 };
 
@@ -132,3 +141,4 @@ var myChart = new Chart(buzMallCanvas, {
   }
 });
 }
+console.log(clickBait)
