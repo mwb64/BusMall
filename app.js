@@ -45,7 +45,6 @@ var previousPicArray = [];
    var currentPicArray = [];
    while(currentPicArray.length < 3){
      var randMarketPic = picRandom();
-    console.log(randMarketPic);
      if(!previousPicArray.includes(randMarketPic) && !currentPicArray.includes(randMarketPic)){
        currentPicArray.push(randMarketPic);
      }
@@ -63,13 +62,11 @@ var previousPicArray = [];
    centerPic.alt = currentPicArray[1];
    rightPic.alt = currentPicArray[2];
    previousPicArray = currentPicArray;
-   console.log(previousPicArray);
    leftPic1.totalViews++;
    centerPic1.totalViews++;
    rightPic1.totalViews++;
   }
 picRandomGen();
-console.log(picRandomGen);
 
 var clickAmounts = 25;
 function clickHandle(event){
@@ -82,9 +79,9 @@ function clickHandle(event){
     leftPic.removeEventListener('click',clickHandle);
     centerPic.removeEventListener('click',clickHandle);
     rightPic.removeEventListener('click',clickHandle);
-    leftPic.src = " ";
-    centerPic.src = " ";
-    rightPic.src = " ";
+    leftPic.src = "https://i.imgur.com/fZ2qSxl.gif";
+    centerPic.src = "https://i.imgur.com/fZ2qSxl.gif";
+    rightPic.src = "https://i.imgur.com/fZ2qSxl.gif";
     showData();
     createChart();
   }
@@ -104,7 +101,6 @@ function showData(){
     liItem.textContent = marketProjectPics[i].name + ' has ' + marketProjectPics[i].totalSelections + ' votes and ' + marketProjectPics[i].totalViews + ' views ';
     // buzMallData.appendChild(liItem);
     clickBait.push(marketProjectPics[i].totalSelections);
-    console.log(clickBait);
   };
 };
 
@@ -121,7 +117,7 @@ for(var i = 0; i < marketProjectPics.length;i++){
 var buzMallCanvas = document.getElementById('buzMallCanvas').getContext('2d');
 
 var myChart = new Chart(buzMallCanvas, {
-  type: 'bar',
+  type: 'horizontalBar',
   data: {
     labels: labelForChart ,
     datasets: [{
@@ -141,4 +137,10 @@ var myChart = new Chart(buzMallCanvas, {
   }
 });
 }
-console.log(clickBait)
+
+var clearData = document.getElementById('clearData');
+clearData.addEventListener('click', clearHandler);
+function clearHandler(){
+    localStorage.clear(localStorage.newClick);
+    clickBait = [];
+}
